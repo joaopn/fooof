@@ -66,6 +66,32 @@ def expo_function(xs, *params):
 
     return ys
 
+def double_expo_function(xs, *params):
+    """Exponential function to use for fitting 1/f, with a 'knee'.
+
+    NOTE: this function requires linear frequency (not log).
+
+    Parameters
+    ----------
+    xs : 1d array
+        Input x-axis values.
+    *params : float
+        Parameters (offset, knee, exp) that define Lorentzian function:
+        y = 10^offset * (1/(knee + x^exp))
+
+    Returns
+    -------
+    ys : 1d array
+        Output values for exponential function.
+    """
+
+    ys = np.zeros_like(xs)
+
+    offset, knee, exp, exp2 = params
+
+    ys = ys + offset - np.log10(knee + xs**exp) - np.log10(xs**exp2)
+
+    return ys
 
 def expo_nk_function(xs, *params):
     """Exponential function to use for fitting 1/f, with no 'knee'.
@@ -164,6 +190,8 @@ def get_ap_func(aperiodic_mode):
         ap_func = expo_nk_function
     elif aperiodic_mode == 'knee':
         ap_func = expo_function
+    elif aperiodic_mode == 'double':
+        ap_func = double_expo_function
     else:
         raise ValueError('Aperiodic mode not understood.')
 
@@ -188,6 +216,8 @@ def infer_ap_func(aperiodic_params):
         aperiodic_mode = 'fixed'
     elif len(aperiodic_params) == 3:
         aperiodic_mode = 'knee'
+    elif len(aperiodic_params) == 4:
+        aperiodic_mode = 'double'
     else:
         raise ValueError('Aperiodic parameters not consistent with any available option.')
 
