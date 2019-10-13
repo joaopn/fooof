@@ -143,7 +143,7 @@ class FOOOF():
         self._ap_percentile_thresh = 0.025
         # Guess parameters for aperiodic fitting, [offset, knee, exponent]
         #  If offset guess is None, the first value of the power spectrum is used as offset guess
-        self._ap_guess = (None, 0, 2,0)
+        self._ap_guess = (None, 100, 2,0)
         # Bounds for aperiodic fitting, as: ((offset_low_bound, knee_low_bound, sl_low_bound),
         #                                    (offset_high_bound, knee_high_bound, sl_high_bound))
         # By default, aperiodic fitting is unbound, but can be restricted here, if desired
@@ -620,7 +620,7 @@ class FOOOF():
             warnings.simplefilter("ignore")
             aperiodic_params, _ = curve_fit(get_ap_func(self.aperiodic_mode),
                                             freqs, power_spectrum, p0=guess,
-                                            maxfev=5000, bounds=self._ap_bounds)
+                                            maxfev=10000, bounds=self._ap_bounds)
 
         return aperiodic_params
 
