@@ -89,7 +89,7 @@ def double_expo_function(xs, *params):
 
     offset, knee, exp, exp2 = params
 
-    ys = ys + offset - np.log10(knee + xs**exp) - exp2*np.log10(xs)
+    ys = ys + offset - np.log10(knee*np.power(xs,exp2) + np.power(xs,exp+exp2))
 
     return ys
 

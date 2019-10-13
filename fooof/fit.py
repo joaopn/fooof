@@ -143,12 +143,12 @@ class FOOOF():
         self._ap_percentile_thresh = 0.025
         # Guess parameters for aperiodic fitting, [offset, knee, exponent]
         #  If offset guess is None, the first value of the power spectrum is used as offset guess
-        self._ap_guess = (None, 100, 2,0)
+        self._ap_guess = (None, 0, 2,0)
         # Bounds for aperiodic fitting, as: ((offset_low_bound, knee_low_bound, sl_low_bound),
         #                                    (offset_high_bound, knee_high_bound, sl_high_bound))
         # By default, aperiodic fitting is unbound, but can be restricted here, if desired
         #   Even if fitting without knee, leave bounds for knee (they are dropped later)
-        self._ap_bounds = ((-np.inf, -np.inf, 0,0), (np.inf, np.inf, np.inf, np.inf))
+        self._ap_bounds = ((-np.inf, -np.inf, -np.inf,-np.inf), (np.inf, np.inf, np.inf, np.inf))
         # Threshold for how far (units of gaus std dev) a peak has to be from edge to keep.
         self._bw_std_edge = 1.0
         # Degree of overlap  (units of gauss std dev) between gaussians for one to be dropped
