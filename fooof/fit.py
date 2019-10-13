@@ -148,7 +148,7 @@ class FOOOF():
         #                                    (offset_high_bound, knee_high_bound, sl_high_bound))
         # By default, aperiodic fitting is unbound, but can be restricted here, if desired
         #   Even if fitting without knee, leave bounds for knee (they are dropped later)
-        self._ap_bounds = ((-np.inf, -np.inf, -np.inf,-np.inf), (np.inf, np.inf, np.inf, np.inf))
+        self._ap_bounds = ((-np.inf, -np.inf, 0,0), (np.inf, np.inf, np.inf, np.inf))
         # Threshold for how far (units of gaus std dev) a peak has to be from edge to keep.
         self._bw_std_edge = 1.0
         # Degree of overlap  (units of gauss std dev) between gaussians for one to be dropped
@@ -177,7 +177,7 @@ class FOOOF():
             #  Convert to gaussian std parameter limits.
             self._gauss_std_limits = tuple([bwl / 2 for bwl in self.peak_width_limits])
             # Bounds for aperiodic fitting. Drops bounds on knee parameter if not set to fit knee
-            self._ap_bounds = self._ap_bounds if self.aperiodic_mode == 'knee' \
+            self._ap_bounds = self._ap_bounds if self.aperiodic_mode != 'fixed' \
                 else tuple(bound[0::2] for bound in self._ap_bounds)
 
         # Otherwise, assume settings are unknown (have been cleared) and set to None

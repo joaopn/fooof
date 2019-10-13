@@ -147,7 +147,7 @@ def linear_function(xs, *params):
     return ys
 
 
-def quadratic_function(xs, *params):
+def quadratic_function(xs, *paramse):
     """Quadratic function to use for better fitting 1/f.
 
     Parameters
